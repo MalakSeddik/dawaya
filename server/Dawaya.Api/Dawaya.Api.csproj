@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <UserSecretsId>dawaya-api-8f1c2b7e</UserSecretsId>
+    <!-- Run as "dotnet Dawaya.Api.dll" (as in Docker). Windows blocked launching the generated .exe. -->
+    <UseAppHost>false</UseAppHost>
     <!-- Writes openapi/Dawaya.Api.json on every build; packages/api-client is generated from it -->
     <OpenApiDocumentsDirectory>$(MSBuildProjectDirectory)/openapi</OpenApiDocumentsDirectory>
     <OpenApiGenerateDocumentsOptions>--file-name dawaya-api</OpenApiGenerateDocumentsOptions>
