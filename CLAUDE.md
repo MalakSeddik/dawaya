@@ -84,3 +84,6 @@ It ships as a **responsive, installable web app (PWA) first**. Android and iOS a
 - A dose becomes `Missed` after 2 hours, or halfway to the next dose if that is shorter.
 - Guests may ask AI questions, rate-limited per device/IP; registered users get a higher limit.
 - Roles use ASP.NET Identity roles (User, Admin, Pharmacist).
+- Age groups: Infant under 2, Child 2-11, Adult 12-64, Elderly 65 and over.
+- Delete-everything (BR-38) hard-deletes all health data and the user's blobs. Audit log and content report rows are kept with the user reference stripped (set to null), not deleted. Pharmacy-order retention goes on the BR-39 legal checklist (Slice 9).
+- Encryption at rest (BR-36): host-level database encryption in production (e.g. Azure SQL) plus encrypted blob storage. No column-level encryption. Re-confirm before Slice 9.

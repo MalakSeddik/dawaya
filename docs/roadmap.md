@@ -5,7 +5,7 @@ Work top to bottom, one slice at a time. A slice is finished only when its "Done
 ## Step 0: Before you open Claude Code (once, about 30 minutes)
 
 - [x] Install: .NET SDK (LTS), Node.js (LTS), pnpm, Git, SQL Server LocalDB or Docker with SQL Server, Claude Code
-- [ ] Create the repo `dawaya` on GitHub and clone it
+- [x] Create the repo `dawaya` on GitHub and clone it (https://github.com/MalakSeddik/dawaya)
 - [x] Create these folders: `docs/`, `server/`, `apps/`, `packages/`
 - [x] Save the business rules into `docs/business-rules.md` (all 88 rules, exactly as written)
 - [x] Save the ER diagrams into `docs/er-diagrams.md` (the file from earlier)
@@ -27,7 +27,7 @@ Work top to bottom, one slice at a time. A slice is finished only when its "Done
 - [x] Large-text and high-contrast modes, persisted, working from the first screen
 - [x] App shell: bottom tabs on phone, sidebar on desktop; installable PWA manifest and icons
 - [x] Reusable `Disclaimer` component (fixed text, BR-23)
-- [ ] CI (GitHub Actions): build + test on every push. *Workflow written (`.github/workflows/ci.yml`); not yet run, because the repo has no GitHub remote.*
+- [x] CI (GitHub Actions): build + test on every push (`.github/workflows/ci.yml`; first run green on `0e766cb`, both jobs)
 
 **BR:** 17 (infrastructure), 23 (component), 33, 35 (principle)
 **Done when:** you can open the site on your phone, install it, switch Arabic/English (layout flips), and toggle large text and high contrast.
