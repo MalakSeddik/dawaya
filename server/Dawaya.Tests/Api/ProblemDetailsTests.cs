@@ -9,9 +9,10 @@ namespace Dawaya.Tests.Api;
 public sealed class ProblemDetailsTests(ApiFactory factory) : IClassFixture<ApiFactory>
 {
     [Fact]
-    public async Task Unknown_route_returns_404_problem_details()
+    public async Task Unknown_route_returns_404_problem_details_when_signed_in()
     {
-        using var client = factory.CreateClient();
+        var (client, _) = await factory.CreateSignedInClientAsync();
+        using var _c = client;
 
         using var response = await client.GetAsync(new Uri("/api/v1/does-not-exist", UriKind.Relative));
 
@@ -20,6 +21,17 @@ public sealed class ProblemDetailsTests(ApiFactory factory) : IClassFixture<ApiF
         using var json = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
         Assert.Equal(404, json.RootElement.GetProperty("status").GetInt32());
         Assert.True(json.RootElement.TryGetProperty("traceId", out _));
+    }
+
+    [Fact]
+    public async Task Unknown_route_returns_401_when_signed_out_so_routes_cannot_be_probed()
+    {
+        using var client = factory.CreateClient();
+
+        using var response = await client.GetAsync(new Uri("/api/v1/does-not-exist", UriKind.Relative));
+
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        Assert.Equal("application/problem+json", response.Content.Headers.ContentType?.MediaType);
     }
 
     [Fact]

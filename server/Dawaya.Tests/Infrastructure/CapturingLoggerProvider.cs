@@ -12,6 +12,17 @@ public sealed class CapturingLoggerProvider : ILoggerProvider
 
     public ILogger CreateLogger(string categoryName) => new CapturingLogger(_messages);
 
+    public async Task<bool> WaitForAsync(Func<string, bool> match, int timeoutMs = 5000)
+    {
+        var deadline = DateTime.UtcNow.AddMilliseconds(timeoutMs);
+        while (DateTime.UtcNow < deadline)
+        {
+            if (_messages.Any(match)) return true;
+            await Task.Delay(25);
+        }
+        return false;
+    }
+
     public void Dispose() { }
 
     private sealed class CapturingLogger(ConcurrentQueue<string> messages) : ILogger

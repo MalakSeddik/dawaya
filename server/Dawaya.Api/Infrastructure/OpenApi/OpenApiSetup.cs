@@ -19,7 +19,7 @@ public static class OpenApiSetup
 
     public static WebApplication UseDawayaOpenApi(this WebApplication app)
     {
-        app.MapOpenApi();
+        app.MapOpenApi().AllowAnonymous();
         if (app.Environment.IsDevelopment())
         {
             app.UseSwaggerUI(o =>

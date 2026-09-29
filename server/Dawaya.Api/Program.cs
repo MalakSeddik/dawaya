@@ -1,14 +1,19 @@
 using System.Text.Json.Serialization;
 using Dawaya.Api.Data;
-using Dawaya.Api.Domain.Identity;
+using Dawaya.Api.Features.Account;
+using Dawaya.Api.Features.Auth;
+using Dawaya.Api.Features.Catalog;
 using Dawaya.Api.Features.Health;
+using Dawaya.Api.Features.Profiles;
 using Dawaya.Api.Infrastructure;
+using Dawaya.Api.Infrastructure.Email;
 using Dawaya.Api.Infrastructure.ErrorHandling;
 using Dawaya.Api.Infrastructure.Logging;
 using Dawaya.Api.Infrastructure.OpenApi;
+using Dawaya.Api.Infrastructure.Security;
+using Dawaya.Api.Infrastructure.Storage;
 using Dawaya.Api.Infrastructure.Validation;
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,9 +28,10 @@ builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddDbContext<AppDbContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
-builder.Services.AddIdentityCore<ApplicationUser>()
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddDawayaSecurity(builder.Configuration);
+builder.Services.AddDawayaEmail(builder.Configuration, builder.Environment);
+builder.Services.AddSingleton<IBlobStorage>(new LocalDiskBlobStorage(
+    Path.GetFullPath(builder.Configuration["Storage:LocalRoot"] ?? "App_Data/blobs", builder.Environment.ContentRootPath)));
 
 builder.Services
     .AddControllers(o =>
@@ -48,6 +54,14 @@ builder.Services.AddDawayaCors(builder.Configuration);
 builder.Services.AddHealthChecks().AddDbContextCheck<AppDbContext>("database");
 builder.Services.AddScoped<IHealthReporter, HealthReporter>();
 
+builder.Services.AddScoped<IAccessTokenIssuer, AccessTokenIssuer>();
+builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IIngredientSearch, IngredientSearch>();
+if (!BuildContext.IsGeneratingOpenApi) builder.Services.AddHostedService<RefreshTokenCleanupService>();
+
 var app = builder.Build();
 
 app.UseDawayaProblemDetails();
@@ -58,6 +72,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 }
 app.UseCors(CorsSetup.PolicyName);
+app.UseAuthentication();
+app.UseRateLimiter();
 app.UseAuthorization();
 
 app.UseDawayaOpenApi();

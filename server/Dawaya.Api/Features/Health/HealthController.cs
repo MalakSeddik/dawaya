@@ -1,9 +1,11 @@
 using Dawaya.Api.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dawaya.Api.Features.Health;
 
 [ApiController]
+[AllowAnonymous]
 [Route(ApiRoutes.V1 + "/health")]
 public sealed class HealthController(IHealthReporter reporter) : ControllerBase
 {

@@ -1,10 +1,12 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dawaya.Tests.Infrastructure;
 
 // Endpoints that exist only inside the test host, to exercise error handling and validation.
 [ApiController]
+[AllowAnonymous]
 [Route("api/v1/_test")]
 public sealed class TestOnlyController : ControllerBase
 {

@@ -13,8 +13,10 @@ public sealed class RequestLoggingTests(ApiFactory factory) : IClassFixture<ApiF
         using var response = await client.GetAsync(
             new Uri("/api/v1/health?token=raw-share-token-123&allergy=penicillin", UriKind.Relative));
 
+        // The request line is logged after the response is sent, so give it a moment to arrive.
+        var logged = await factory.Logs.WaitForAsync(m => m.Contains("GET api/v1/health responded 200", StringComparison.Ordinal));
+        Assert.True(logged, "Expected a request log line with the route template.");
         var messages = factory.Logs.Messages;
-        Assert.Contains(messages, m => m.Contains("GET api/v1/health responded 200", StringComparison.Ordinal));
         Assert.DoesNotContain(messages, m => m.Contains("raw-share-token-123", StringComparison.Ordinal));
         Assert.DoesNotContain(messages, m => m.Contains("penicillin", StringComparison.Ordinal));
     }

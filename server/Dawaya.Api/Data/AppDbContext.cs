@@ -11,6 +11,9 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+    // Identity
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
     // Profiles
     public DbSet<PatientProfile> Profiles => Set<PatientProfile>();
     public DbSet<ProfileAllergy> ProfileAllergies => Set<ProfileAllergy>();

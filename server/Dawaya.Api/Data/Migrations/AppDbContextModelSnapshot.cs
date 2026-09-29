@@ -574,6 +574,56 @@ namespace Dawaya.Api.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Dawaya.Api.Domain.Identity.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("FamilyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("ReplacedByTokenId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nchar(64)")
+                        .IsFixedLength();
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpiresAt");
+
+                    b.HasIndex("FamilyId");
+
+                    b.HasIndex("TokenHash")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens", (string)null);
+                });
+
             modelBuilder.Entity("Dawaya.Api.Domain.Profiles.PatientProfile", b =>
                 {
                     b.Property<int>("Id")
@@ -686,6 +736,29 @@ namespace Dawaya.Api.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "5b0a1c8e-1f0e-4b7a-9d0c-3a1d2c4e5f01",
+                            ConcurrencyStamp = "5b0a1c8e-1f0e-4b7a-9d0c-3a1d2c4e5f01",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "5b0a1c8e-1f0e-4b7a-9d0c-3a1d2c4e5f02",
+                            ConcurrencyStamp = "5b0a1c8e-1f0e-4b7a-9d0c-3a1d2c4e5f02",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "5b0a1c8e-1f0e-4b7a-9d0c-3a1d2c4e5f03",
+                            ConcurrencyStamp = "5b0a1c8e-1f0e-4b7a-9d0c-3a1d2c4e5f03",
+                            Name = "Pharmacist",
+                            NormalizedName = "PHARMACIST"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -899,6 +972,17 @@ namespace Dawaya.Api.Data.Migrations
                     b.Navigation("ActiveIngredient");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Dawaya.Api.Domain.Identity.RefreshToken", b =>
+                {
+                    b.HasOne("Dawaya.Api.Domain.Identity.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Dawaya.Api.Domain.Profiles.PatientProfile", b =>

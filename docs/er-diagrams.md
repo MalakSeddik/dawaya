@@ -9,6 +9,7 @@ Five focused diagrams covering the whole schema. All tables also carry `CreatedA
 4. `QuantityUnit` and `DoseUnit` must match, enforced through `MedicineProducts.UnitOfCount`.
 5. A dose becomes `Missed` after a grace window: 2 hours, or halfway to the next dose if shorter (a system setting, not a column).
 6. Guests may ask the AI, rate-limited per device/IP (`AiQuestionLogs.ClientKeyHash`).
+7. `RefreshTokens` (added in Slice 1, approved): hashed, rotating refresh tokens for JWT auth.
 
 ---
 
@@ -17,6 +18,7 @@ Five focused diagrams covering the whole schema. All tables also carry `CreatedA
 ```mermaid
 erDiagram
     AspNetUsers ||--o{ Profiles : owns
+    AspNetUsers ||--o{ RefreshTokens : "signed in with"
     AspNetUsers ||--o{ PushSubscriptions : registers
     AspNetUsers ||--o{ Notifications : receives
     Profiles ||--o{ ProfileAllergies : has
@@ -51,6 +53,15 @@ erDiagram
         int Id PK
         string NameEn
         string NameAr
+    }
+    RefreshTokens {
+        int Id PK
+        string UserId FK "cascade on user delete"
+        string TokenHash UK "SHA-256; raw token never stored"
+        guid FamilyId "one sign-in; reuse revokes the family"
+        datetime ExpiresAt "30 days"
+        datetime RevokedAt
+        int ReplacedByTokenId
     }
     PushSubscriptions {
         int Id PK
