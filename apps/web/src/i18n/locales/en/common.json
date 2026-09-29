@@ -1,0 +1,63 @@
+{
+  "app": {
+    "name": "Dawaya",
+    "tagline": "Understand your medicines easily"
+  },
+  "nav": {
+    "primary": "Main navigation",
+    "skipToContent": "Skip to content",
+    "home": "Home",
+    "scan": "Scan",
+    "schedule": "Schedule",
+    "profiles": "Family",
+    "settings": "Settings"
+  },
+  "preferences": {
+    "title": "Display",
+    "groupLabel": "Display settings",
+    "switchLanguage": "التحويل للعربي",
+    "otherLanguageName": "عربي",
+    "language": "Language",
+    "largeText": "Large text",
+    "largeTextHint": "Makes text and buttons bigger across the app",
+    "highContrast": "High contrast",
+    "highContrastHint": "Black and white with strong contrast for easier reading"
+  },
+  "home": {
+    "title": "Welcome to Dawaya",
+    "intro": "Understand your medicines, keep track of their times, and look after your family's medicines.",
+    "actions": {
+      "scan": {
+        "title": "Scan a medicine box",
+        "description": "Identify a medicine from its box or barcode"
+      },
+      "schedule": {
+        "title": "Today's doses",
+        "description": "See the doses you have today"
+      },
+      "profiles": {
+        "title": "Family medicines",
+        "description": "Add Mom and Dad and follow their medicines"
+      }
+    }
+  },
+  "placeholder": {
+    "comingSoon": "This part is still being built and will be available soon."
+  },
+  "settings": {
+    "title": "Settings",
+    "about": "About",
+    "serverStatus": "Server connection",
+    "status": {
+      "checking": "Checking...",
+      "Healthy": "Working",
+      "Degraded": "Working, but slow",
+      "Unhealthy": "Not available right now",
+      "offline": "No connection"
+    }
+  },
+  "disclaimer": {
+    "title": "Important",
+    "text": "This is general information only. It does not replace advice from your doctor or pharmacist."
+  }
+}

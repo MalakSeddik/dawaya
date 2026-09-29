@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f766e" />
+    <meta name="description" content="دوايا: رفيقك في فهم أدويتك ومواعيدها" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
+    <title>دوايا</title>
+    <!--
+      Applies saved language, large text and high contrast before first paint (BR-33), so the page never
+      flashes the wrong direction or size. Keep the key in sync with PREFERENCES_STORAGE_KEY
+      (src/features/preferences/preferences.ts); a test checks this.
+    -->
+    <script>
+      (function () {
+        try {
+          var p = JSON.parse(localStorage.getItem('dawaya.preferences') || '{}') || {};
+          var h = document.documentElement;
+          var lang = p.language === 'en' ? 'en' : 'ar';
+          h.lang = lang;
+          h.dir = lang === 'ar' ? 'rtl' : 'ltr';
+          if (p.largeText === true) h.setAttribute('data-text-size', 'large');
+          if (p.highContrast === true) h.setAttribute('data-contrast', 'high');
+        } catch (e) {
+          /* storage blocked: defaults (Arabic, normal text) apply */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "app": {
+    "name": "دوايا",
+    "tagline": "افهم دواك بسهولة"
+  },
+  "nav": {
+    "primary": "التنقل الرئيسي",
+    "skipToContent": "روح للمحتوى على طول",
+    "home": "الرئيسية",
+    "scan": "مسح الدوا",
+    "schedule": "المواعيد",
+    "profiles": "العيلة",
+    "settings": "الإعدادات"
+  },
+  "preferences": {
+    "title": "طريقة العرض",
+    "groupLabel": "إعدادات العرض",
+    "switchLanguage": "Switch to English",
+    "otherLanguageName": "English",
+    "language": "اللغة",
+    "largeText": "كلام كبير",
+    "largeTextHint": "يكبّر الكلام والزراير في التطبيق كله",
+    "highContrast": "ألوان واضحة",
+    "highContrastHint": "أبيض وأسود بتباين عالي عشان القراية تبقى أسهل"
+  },
+  "home": {
+    "title": "أهلاً وسهلاً في دوايا",
+    "intro": "افهم دواك بسهولة، واعرف مواعيده، وتابع أدوية عيلتك.",
+    "actions": {
+      "scan": {
+        "title": "صوّر علبة الدوا",
+        "description": "اعرف الدوا من صورة العلبة أو الباركود"
+      },
+      "schedule": {
+        "title": "مواعيد النهارده",
+        "description": "شوف الجرعات اللي عليك النهارده"
+      },
+      "profiles": {
+        "title": "أدوية العيلة",
+        "description": "ضيف ماما وبابا وتابع أدويتهم"
+      }
+    }
+  },
+  "placeholder": {
+    "comingSoon": "الجزء ده لسه بيتعمل، وهيكون موجود قريب."
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "about": "عن التطبيق",
+    "serverStatus": "الاتصال بالخادم",
+    "status": {
+      "checking": "بنتأكد...",
+      "Healthy": "شغّال",
+      "Degraded": "شغّال بس فيه بطء",
+      "Unhealthy": "مش متاح دلوقتي",
+      "offline": "مفيش اتصال"
+    }
+  },
+  "disclaimer": {
+    "title": "تنبيه مهم",
+    "text": "المعلومات دي عامة وللتوضيح بس، ومش بديل عن كلام الدكتور أو الصيدلي."
+  }
+}
