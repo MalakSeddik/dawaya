@@ -19,18 +19,26 @@ Work top to bottom, one slice at a time. A slice is finished only when its "Done
 
 ### Slice 0: Foundation
 **Goal:** an empty but production-shaped app that runs on a phone.
-- [ ] Monorepo with pnpm workspaces; API project + test project; React PWA
-- [ ] SQL Server connection, Identity, first migration applied (uses the starter entities)
-- [ ] Swagger/OpenAPI + generated `packages/api-client`
-- [ ] ProblemDetails errors, logging (no health data), CORS, health endpoint
-- [ ] Design system: Tailwind + shadcn/ui, Arabic font, RTL/LTR switch, i18n set up
-- [ ] Large-text and high-contrast modes, persisted, working from the first screen
-- [ ] App shell: bottom tabs on phone, sidebar on desktop; installable PWA manifest and icons
-- [ ] Reusable `Disclaimer` component (fixed text, BR-23)
-- [ ] CI (GitHub Actions): build + test on every push
+- [x] Monorepo with pnpm workspaces; API project + test project; React PWA
+- [x] SQL Server connection, Identity, first migration applied (uses the starter entities)
+- [x] Swagger/OpenAPI + generated `packages/api-client`
+- [x] ProblemDetails errors, logging (no health data), CORS, health endpoint
+- [x] Design system: Tailwind + shadcn/ui, Arabic font, RTL/LTR switch, i18n set up
+- [x] Large-text and high-contrast modes, persisted, working from the first screen
+- [x] App shell: bottom tabs on phone, sidebar on desktop; installable PWA manifest and icons
+- [x] Reusable `Disclaimer` component (fixed text, BR-23)
+- [ ] CI (GitHub Actions): build + test on every push. *Workflow written (`.github/workflows/ci.yml`); not yet run, because the repo has no GitHub remote.*
 
 **BR:** 17 (infrastructure), 23 (component), 33, 35 (principle)
 **Done when:** you can open the site on your phone, install it, switch Arabic/English (layout flips), and toggle large text and high contrast.
+*Status: verified in a 375px phone-size browser (flip, toggles, persistence, no overflow, 44px targets) and the production build emits a complete manifest and service worker. Not yet checked on a real phone: installing needs HTTPS (tunnel or hosting).*
+
+**Where each BR lives:**
+- BR-17 (language infrastructure): `apps/web/src/i18n/` (Arabic default, typed keys), `apps/web/src/features/preferences/preferences.ts`; tests `i18n/locales.test.ts`, `preferences/AccessibilityToolbar.test.tsx`. Plain explanations of medical terms come with content in Slice 3.
+- BR-23: `apps/web/src/components/Disclaimer.tsx`; test `components/Disclaimer.test.tsx`
+- BR-33: `apps/web/src/features/preferences/*`, `apps/web/index.html` (applied before first paint), `apps/web/src/styles/index.css`; tests `preferences/preferences.test.ts`, `preferences/AccessibilityToolbar.test.tsx`
+- BR-35 (principle): home actions and tabs are one tap from the home screen, `apps/web/src/app/AppShell.tsx`, `features/home/HomePage.tsx`; test `app/AppShell.test.tsx`
+- BR-36 (groundwork): request logs hold route templates only, 500s never echo exception text; `server/Dawaya.Api/Infrastructure/Logging`, `Infrastructure/ErrorHandling`; tests `Dawaya.Tests/Api/RequestLoggingTests.cs`, `ProblemDetailsTests.cs`
 
 ### Slice 1: Accounts and family profiles
 - [ ] Register, log in, refresh tokens, log out, forgot password

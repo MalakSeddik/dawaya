@@ -68,10 +68,13 @@ It ships as a **responsive, installable web app (PWA) first**. Android and iOS a
 6. Tell me anything you assumed, and anything a business rule leaves unclear, instead of silently deciding.
 
 ## Commands (update as they are created)
-- Server: `dotnet build`, `dotnet test`, `dotnet run --project server/Dawaya.Api`
-- Web: `pnpm install`, `pnpm --filter web dev`, `pnpm --filter web build`, `pnpm --filter web test`
-- Client regen: `pnpm --filter api-client generate`
-- Migrations: `dotnet ef migrations add <Name> --project server/Dawaya.Api`, then `dotnet ef database update`
+- Server: `dotnet build`, `dotnet test`, `dotnet run --project server/Dawaya.Api` (API on http://localhost:5139, Swagger UI at `/swagger` in Development)
+- Web: `pnpm install`, `pnpm --filter web dev` (http://localhost:5173, proxies `/api` to :5139), `pnpm --filter web build`, `pnpm --filter web test`
+- Whole workspace (what CI runs): `pnpm typecheck`, `pnpm lint`, `pnpm test`
+- Client regen: `dotnet build` writes `server/Dawaya.Api/openapi/dawaya-api.json`, then `pnpm --filter api-client generate`. Commit both; CI fails if they drift.
+- Migrations: `dotnet ef migrations add <Name> --project server/Dawaya.Api --output-dir Data/Migrations`, then `dotnet ef database update --project server/Dawaya.Api`
+- PWA icons: edit `apps/web/public/logo.svg`, then `pnpm --filter web icons`
+- Tooling notes: TypeScript is pinned to 6.0 (openapi-typescript and typescript-eslint need its JS API; TypeScript 7 removed it). `pnpm lint` also fails on physical left/right CSS (`apps/web/scripts/check-logical-css.mjs`).
 
 ## Decisions already made
 - Saving a medicine without a regimen is `Status = Saved`; it becomes `Active` when a regimen is added.
