@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  server:
+    name: API build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - run: dotnet restore Dawaya.slnx
+      - run: dotnet build Dawaya.slnx --no-restore --configuration Release
+      - run: dotnet test Dawaya.slnx --no-build --configuration Release
+      # Building regenerates the OpenAPI document; it must match what is committed.
+      - name: OpenAPI contract is committed
+        run: git diff --exit-code -- server/Dawaya.Api/openapi
+
+  web:
+    name: Web lint, test and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # The generated client must match the committed OpenAPI document.
+      - name: API client is up to date
+        run: |
+          pnpm --filter api-client generate
+          git diff --exit-code -- packages/api-client/src/schema.ts
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm --filter web build
