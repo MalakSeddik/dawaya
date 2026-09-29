@@ -1,0 +1,79 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Dawaya API",
+    "description": "Medication companion API. All dates are UTC (ISO 8601). Errors are RFC 7807 ProblemDetails.",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "operationId": "GetHealth",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HealthResponse": {
+        "required": [
+          "status",
+          "checks",
+          "checkedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/HealthState"
+          },
+          "checks": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/HealthState"
+            }
+          },
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "HealthState": {
+        "enum": [
+          "Healthy",
+          "Degraded",
+          "Unhealthy"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Health"
+    }
+  ]
+}
