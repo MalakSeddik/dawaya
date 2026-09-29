@@ -69,6 +69,8 @@ It ships as a **responsive, installable web app (PWA) first**. Android and iOS a
 
 ## Commands (update as they are created)
 - Server: `dotnet build`, `dotnet test`, `dotnet run --project server/Dawaya.Api` (API on http://localhost:5139, Swagger UI at `/swagger` in Development)
+- First-time server setup (per machine): set a JWT signing key of 32+ characters in user-secrets, e.g. `dotnet user-secrets set "Jwt:SigningKey" "<random 48-byte base64>" --project server/Dawaya.Api`. The API refuses to start without it. In production use the `Jwt__SigningKey` environment variable.
+- Dev emails (password reset) are written to `server/Dawaya.Api/App_Data/emails/` (git-ignored). Dev blobs go to `App_Data/blobs/`.
 - Web: `pnpm install`, `pnpm --filter web dev` (http://localhost:5173, proxies `/api` to :5139), `pnpm --filter web build`, `pnpm --filter web test`
 - Whole workspace (what CI runs): `pnpm typecheck`, `pnpm lint`, `pnpm test`
 - Client regen: `dotnet build` writes `server/Dawaya.Api/openapi/dawaya-api.json`, then `pnpm --filter api-client generate`. Commit both; CI fails if they drift.
@@ -87,3 +89,7 @@ It ships as a **responsive, installable web app (PWA) first**. Android and iOS a
 - Age groups: Infant under 2, Child 2-11, Adult 12-64, Elderly 65 and over.
 - Delete-everything (BR-38) hard-deletes all health data and the user's blobs. Audit log and content report rows are kept with the user reference stripped (set to null), not deleted. Pharmacy-order retention goes on the BR-39 legal checklist (Slice 9).
 - Encryption at rest (BR-36): host-level database encryption in production (e.g. Azure SQL) plus encrypted blob storage. No column-level encryption. Re-confirm before Slice 9.
+- Auth tokens: 15-minute JWT access tokens; 30-day refresh tokens stored only as SHA-256 hashes in a `RefreshTokens` table, rotated on every refresh, and a reused token revokes its whole family.
+- Email: `IEmailSender` interface; development writes emails to a git-ignored folder (never to logs). Production provider is chosen in Slice 9. No email confirmation is required in the MVP.
+- Accounts: a "Me" profile is created at registration and is deleted only with the account. At most 20 profiles per account. Pregnancy/breastfeeding flags are allowed on any profile (they only add warnings). Typed allergy text that exactly matches an ingredient name is linked to it; otherwise it stays as text.
+- Account deletion requires the password. Export is `GET /api/v1/me/export` (JSON, `Cache-Control: no-store`). Passwords: minimum 8 characters, no composition rules; lockout after 5 failures for 15 minutes; auth endpoints are rate-limited per IP. Guests can browse; save/profile features prompt sign-in.

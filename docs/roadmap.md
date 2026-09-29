@@ -41,15 +41,25 @@ Work top to bottom, one slice at a time. A slice is finished only when its "Done
 - BR-36 (groundwork): request logs hold route templates only, 500s never echo exception text; `server/Dawaya.Api/Infrastructure/Logging`, `Infrastructure/ErrorHandling`; tests `Dawaya.Tests/Api/RequestLoggingTests.cs`, `ProblemDetailsTests.cs`
 
 ### Slice 1: Accounts and family profiles
-- [ ] Register, log in, refresh tokens, log out, forgot password
-- [ ] Guest mode: browse and scan without an account
-- [ ] Family profiles CRUD ("Me", "Mom", "Dad"), active-profile switcher
-- [ ] Profile details: age group, pregnancy/breastfeeding, allergies (linked to an ingredient when possible)
-- [ ] Data export (JSON) and permanent delete-everything (hard delete, including blobs)
-- [ ] Tests: ownership checks (a user can never read another user's profile)
+- [x] Register, log in, refresh tokens, log out, forgot password
+- [x] Guest mode: browse and scan without an account. *Guests can use every screen; save/profile features show a sign-in prompt. The scan endpoints themselves arrive in Slice 6 and must be added to the anonymous allow-list test (`SecurityTests`) then.*
+- [x] Family profiles CRUD ("Me", "Mom", "Dad"), active-profile switcher
+- [x] Profile details: age group, pregnancy/breastfeeding, allergies (linked to an ingredient when possible)
+- [x] Data export (JSON) and permanent delete-everything (hard delete, including blobs)
+- [x] Tests: ownership checks (a user can never read another user's profile)
 
 **BR:** 4, 5, 6, 7, 36, 38
 **Done when:** a user can create three profiles with allergies, export everything, and delete the account so no rows remain.
+*Status: verified end to end in the browser against LocalDB (register, Mom and Dad plus Me with allergies, export file checked, delete, then a SQL count showed 0 rows left for the user, profiles, allergies, role links and refresh tokens). Also covered by `AccountTests.Three_profiles_with_allergies_can_be_exported_then_permanently_deleted`.*
+
+**Where each BR lives:**
+- BR-04 (guests): anonymous allow-list in `server/Dawaya.Tests/Api/SecurityTests.cs`; `apps/web/src/components/SignInPrompt.tsx`; test `features/profiles/ProfilesPage.test.tsx` (guest prompt)
+- BR-05 (registered users save/history): `Features/Auth/*`, `apps/web/src/features/auth/*`; tests `Api/AuthTests.cs`, `auth/LoginPage.test.tsx`, `auth/RegisterPage.test.tsx`, `auth/session.test.ts`, `lib/api.test.ts`
+- BR-06 (family profiles): `Features/Profiles/*`, `apps/web/src/features/profiles/*`; tests `Api/ProfileTests.cs`, `Api/OwnershipTests.cs`, `profiles/ProfilesPage.test.tsx`
+- BR-07 (details affect warnings only): `ProfileContracts.cs` (no dose fields exist), UI hint in `ProfileFormPage.tsx`; tests `ProfileTests.Pregnancy_flags_are_allowed_on_any_age_group`, `ProfileTests.Allergies_link_to_ingredients_...`
+- BR-36 (health data protection, app side): owner-scoped queries (404 for others), tokens hashed, nothing sensitive logged, export `no-store`; tests `OwnershipTests`, `AuthTests.Refresh_tokens_are_stored_only_as_hashes`, `AuthTests.Tokens_and_passwords_never_reach_the_logs`, `RequestLoggingTests`. Encryption at rest is host-level (decision recorded in CLAUDE.md, re-confirm before Slice 9).
+- BR-38 (export and delete): `Features/Account/*`, `Infrastructure/Storage/*`, `apps/web/src/features/account/*`; tests `AccountTests`, `ModelTests.Every_reference_to_a_user_is_removed_or_stripped_when_the_user_is_deleted`, `LocalDiskBlobStorageTests`, `account/DeleteAccountPage.test.tsx`
+- BR-33 (carried forward): preferences now follow the account; tests `preferences/PreferencesSync.test.tsx`, `AccountTests.Me_returns_the_account_and_preferences_follow_the_user`, `AuthTests.Register_keeps_the_display_settings_chosen_as_a_guest`
 
 ### Slice 2: Catalog and admin
 - [ ] Seed/import script: 30 to 50 real medicines with products, ingredients, leaflet sections, dose rules, warnings
