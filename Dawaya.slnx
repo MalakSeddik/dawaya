@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/server/">
+    <Project Path="server/Dawaya.Api/Dawaya.Api.csproj" />
+    <Project Path="server/Dawaya.Tests/Dawaya.Tests.csproj" />
+  </Folder>
+</Solution>

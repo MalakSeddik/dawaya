@@ -2,27 +2,7 @@ using Dawaya.Api.Domain.Profiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Dawaya.Api.Data.Configurations;
-
-public class PatientProfileConfiguration : IEntityTypeConfiguration<PatientProfile>
-{
-    public void Configure(EntityTypeBuilder<PatientProfile> b)
-    {
-        b.ToTable("Profiles");
-        b.Property(x => x.DisplayName).HasMaxLength(100).IsRequired();
-        b.Property(x => x.Relationship).HasMaxLength(50);
-        b.Property(x => x.AgeGroup).HasConversion<string>().HasMaxLength(20);
-
-        // Cascade so "delete all my data" (BR-38) removes every profile with the account.
-        b.HasOne(x => x.Owner).WithMany(u => u.Profiles)
-            .HasForeignKey(x => x.OwnerUserId).OnDelete(DeleteBehavior.Cascade);
-
-        b.HasIndex(x => x.OwnerUserId);
-        // At most one "myself" profile per account
-        b.HasIndex(x => x.OwnerUserId).IsUnique().HasFilter("[IsSelf] = 1")
-            .HasDatabaseName("UX_Profiles_OneSelfPerUser");
-    }
-}
+namespace Dawaya.Api.Data.Configurations.Profiles;
 
 public class ProfileAllergyConfiguration : IEntityTypeConfiguration<ProfileAllergy>
 {

@@ -33,6 +33,13 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
+    // SQL Server returns DateTime with Kind=Unspecified; mark it UTC so the API always emits "Z" (ISO 8601 UTC).
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<DateTime>().HaveConversion<UtcDateTimeConverter>();
+        configurationBuilder.Properties<DateTime?>().HaveConversion<NullableUtcDateTimeConverter>();
+    }
+
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
         StampTimestamps();
