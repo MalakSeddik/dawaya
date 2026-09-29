@@ -1,0 +1,81 @@
+# ---------- Node / pnpm ----------
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+
+# Build output
+dist/
+dist-ssr/
+build/
+out/
+coverage/
+.vite/
+dev-dist/
+
+# Test / E2E output
+playwright-report/
+test-results/
+blob-report/
+
+# ---------- Environment and secrets (never commit) ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+secrets.json
+
+# ---------- .NET ----------
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.rsuser
+.vs/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+*.nupkg
+*.snupkg
+artifacts/
+appsettings.*.local.json
+
+# Local blob storage used in development (IBlobStorage local-disk implementation)
+server/Dawaya.Api/App_Data/
+server/Dawaya.Api/uploads/
+
+# LocalDB / SQL files created locally
+*.mdf
+*.ldf
+
+# ---------- Editors / OS ----------
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# ---------- Logs ----------
+logs/
+*.log
+
+# ---------- Claude Code local settings ----------
+.claude/settings.local.json
