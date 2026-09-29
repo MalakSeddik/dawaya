@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { api } from '@/lib/api';
+import { useApi } from '@/lib/ApiContext';
 
 export function useApiHealth() {
+  const { api } = useApi();
   return useQuery({
     queryKey: ['system', 'health'],
     queryFn: async ({ signal }) => {

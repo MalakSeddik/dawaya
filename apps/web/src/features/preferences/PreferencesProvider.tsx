@@ -39,6 +39,15 @@ export function PreferencesProvider({ children, storage = browserStorage }: Pref
       setHighContrast: (highContrast) => {
         update({ highContrast });
       },
+      replacePreferences: (next) => {
+        setPreferences((current) =>
+          current.language === next.language &&
+          current.largeText === next.largeText &&
+          current.highContrast === next.highContrast
+            ? current
+            : next,
+        );
+      },
     }),
     [preferences, update],
   );

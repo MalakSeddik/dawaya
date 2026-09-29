@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { PageHeader } from '@/components/PageHeader';
 import { Button } from '@/components/ui/button';
+import { AccountSection } from '@/features/account/AccountSection';
 import { LANGUAGES } from '@/features/preferences/preferences';
 import { usePreferences } from '@/features/preferences/usePreferences';
 import { useApiHealth } from '@/features/system/useApiHealth';
@@ -23,6 +24,8 @@ export function SettingsPage() {
   return (
     <>
       <PageHeader title={t('settings.title')} />
+
+      <AccountSection />
 
       <section aria-labelledby="display-heading" className="mb-8 flex flex-col gap-4">
         <h2 id="display-heading" className="text-xl font-bold">

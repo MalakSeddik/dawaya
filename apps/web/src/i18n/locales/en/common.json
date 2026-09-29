@@ -3,6 +3,12 @@
     "name": "Dawaya",
     "tagline": "Understand your medicines easily"
   },
+  "common": {
+    "loading": "One moment...",
+    "save": "Save",
+    "saved": "Saved",
+    "cancel": "Cancel"
+  },
   "nav": {
     "primary": "Main navigation",
     "skipToContent": "Skip to content",
@@ -40,6 +46,114 @@
         "description": "Add Mom and Dad and follow their medicines"
       }
     }
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "createAccount": "Create account",
+    "signInTitle": "Sign in",
+    "signInIntro": "Sign in to save your medicines and your family's.",
+    "registerTitle": "New account",
+    "registerIntro": "An account lets you save medicines and times, and add your family.",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least {{count}} characters. An easy-to-remember phrase works best.",
+    "yourName": "Your name",
+    "yourNameHint": "This becomes the name of your own profile in the app.",
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "forgotTitle": "Forgot password",
+    "forgotIntro": "Enter your email and we'll send you a link to choose a new password.",
+    "sendResetLink": "Send the link",
+    "resetEmailSent": "If this email has an account, a link to reset the password will arrive in a few minutes. The link works for 1 hour.",
+    "backToSignIn": "Back to sign in",
+    "resetTitle": "New password",
+    "newPassword": "New password",
+    "confirmPassword": "Type the password again",
+    "savePassword": "Save password",
+    "resetDone": "Your password was changed. Sign in with it now."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "This email address is not valid",
+    "tooLong": "This is too long",
+    "passwordMin": "The password must be at least {{count}} characters",
+    "passwordsMatch": "The two passwords don't match"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again in a moment.",
+    "invalid_credentials": "The email or password is incorrect.",
+    "account_locked": "Too many wrong passwords. Wait 15 minutes and try again, or reset your password.",
+    "email_taken": "An account with this email already exists. Try signing in.",
+    "password_too_weak": "The password must be at least 8 characters.",
+    "password_same_as_email": "The password can't be the same as the email.",
+    "invalid_email": "This email address is not valid.",
+    "invalid_reset_link": "This link doesn't work or has expired. Ask for a new one.",
+    "invalid_refresh_token": "Your session ended. Please sign in again.",
+    "rate_limited": "Too many attempts in a row. Wait a minute and try again.",
+    "profile_limit_reached": "You've reached the limit of 20 people on one account.",
+    "self_profile_cannot_be_deleted": "Your own profile is only removed when you delete the whole account.",
+    "profile_not_found": "This profile doesn't exist.",
+    "allergy_already_added": "This allergy is already on the list.",
+    "ingredient_not_found": "We don't have this ingredient. Type it in instead.",
+    "wrong_password": "The password is incorrect."
+  },
+  "profiles": {
+    "title": "Family",
+    "intro": "Add everyone whose medicines you look after, like Mom and Dad.",
+    "signInToManage": "Sign in to add your family and follow their medicines.",
+    "add": "Add a person",
+    "addTitle": "Add a person",
+    "saveAndAddAllergies": "Save, then add allergies",
+    "showingFor": "Whose medicines are you following now?",
+    "meLabel": "{{name}} (me)",
+    "editNamed": "Edit {{name}}",
+    "allergicTo": "Allergic to:",
+    "isActive": "This is who you're following now",
+    "makeActive": "Follow this person's medicines",
+    "pregnant": "Pregnant",
+    "breastfeeding": "Breastfeeding",
+    "name": "Name",
+    "relationship": "Relationship",
+    "relationshipHint": "For example: Mom, Dad, my son. Optional.",
+    "ageGroup": "Age",
+    "ageGroupNotSet": "Not set",
+    "specialCases": "Special situations",
+    "warningsOnlyHint": "This only highlights important warnings. It never changes the dose.",
+    "deleteTitle": "Remove this person",
+    "delete": "Remove {{name}}",
+    "deleteConfirm": "Are you sure you want to remove {{name}} and all their details? This can't be undone.",
+    "deleteYes": "Yes, remove"
+  },
+  "ageGroups": {
+    "Infant": { "label": "Infant", "range": "under 2" },
+    "Child": { "label": "Child", "range": "2 to 11 years" },
+    "Adult": { "label": "Adult", "range": "12 to 64 years" },
+    "Elderly": { "label": "Older adult", "range": "65 or older" }
+  },
+  "allergies": {
+    "title": "Allergies",
+    "none": "No allergies recorded.",
+    "notLinked": "typed in",
+    "remove": "Remove {{name}} allergy",
+    "add": "Add an allergy",
+    "addHint": "Type a medicine or active ingredient. If it appears in the suggestions, pick it, so we can warn you about medicines that contain it.",
+    "suggestions": "Suggestions",
+    "addAsTyped": "Add \"{{text}}\" as typed"
+  },
+  "account": {
+    "title": "Account",
+    "guestMessage": "You're using the app without an account. Sign in to save your medicines.",
+    "signedInAs": "Signed in as:",
+    "export": "Download all my data",
+    "signOut": "Sign out",
+    "delete": "Delete account",
+    "deleteTitle": "Delete account permanently",
+    "deleteWarning": "Your account and every person, allergy and file in it will be deleted permanently. This can't be undone.",
+    "deleteExportHint": "If you want a copy of your data, download it first from Settings.",
+    "deleteUnderstand": "I understand this is permanent",
+    "deleteForever": "Delete account permanently",
+    "mustConfirm": "Please confirm you understand this is permanent"
   },
   "placeholder": {
     "comingSoon": "This part is still being built and will be available soon."

@@ -4,6 +4,8 @@ import { Link } from 'react-router';
 
 import { Disclaimer } from '@/components/Disclaimer';
 import { PageHeader } from '@/components/PageHeader';
+import { useSession } from '@/features/auth/AuthContext';
+import { ActiveProfileSwitcher } from '@/features/profiles/ActiveProfileSwitcher';
 
 interface HomeAction {
   to: string;
@@ -20,9 +22,11 @@ const ACTIONS: readonly HomeAction[] = [
 
 export function HomePage() {
   const { t } = useTranslation();
+  const { status } = useSession();
   return (
     <>
       <PageHeader title={t('home.title')} description={t('home.intro')} />
+      {status === 'signedIn' ? <ActiveProfileSwitcher /> : null}
       <ul className="mb-8 grid gap-3 sm:grid-cols-2">
         {ACTIONS.map(({ to, icon: Icon, key }) => (
           <li key={key}>

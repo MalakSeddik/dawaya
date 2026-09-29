@@ -7,6 +7,7 @@ export interface PreferencesContextValue {
   setLanguage: (language: Language) => void;
   setLargeText: (enabled: boolean) => void;
   setHighContrast: (enabled: boolean) => void;
+  replacePreferences: (preferences: Preferences) => void;
 }
 
 export const PreferencesContext = createContext<PreferencesContextValue | null>(null);
