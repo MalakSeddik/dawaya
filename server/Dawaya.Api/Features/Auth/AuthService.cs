@@ -41,6 +41,8 @@ public sealed class AuthService(
             UserName = emailAddress,
             Email = emailAddress,
             PreferredLanguage = request.PreferredLanguage ?? "ar",
+            LargeText = request.LargeText,
+            HighContrast = request.HighContrast,
             CreatedAt = clock.GetUtcNow().UtcDateTime,
         };
 

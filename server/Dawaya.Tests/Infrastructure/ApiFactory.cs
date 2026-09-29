@@ -53,6 +53,12 @@ public class ApiFactory : WebApplicationFactory<Program>
             services.RemoveAll<TimeProvider>();
             services.AddSingleton<TimeProvider>(Clock);
 
+            // Background jobs would share the single SQLite connection with the test (not thread-safe)
+            // and could run before the schema exists. Their logic is tested directly instead.
+            var jobs = services.Where(d => d.ServiceType == typeof(IHostedService)
+                && d.ImplementationType?.Namespace?.StartsWith("Dawaya.", StringComparison.Ordinal) == true).ToList();
+            foreach (var job in jobs) services.Remove(job);
+
             services.AddControllers().AddApplicationPart(typeof(ApiFactory).Assembly);
             services.AddValidatorsFromAssemblyContaining<ApiFactory>();
         });

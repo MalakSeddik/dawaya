@@ -34,6 +34,20 @@ public sealed partial class AuthTests(ApiFactory factory) : IClassFixture<ApiFac
     }
 
     [Fact]
+    public async Task Register_keeps_the_display_settings_chosen_as_a_guest()
+    {
+        using var client = factory.CreateClient();
+
+        using var response = await client.PostJsonAsync("/api/v1/auth/register",
+            new RegisterRequest(ApiClientExtensions.UniqueEmail(), ApiClientExtensions.DefaultPassword, "Nana", "en", LargeText: true, HighContrast: true));
+
+        var user = (await response.ReadAsync<AuthResponse>()).User;
+        Assert.Equal("en", user.PreferredLanguage);
+        Assert.True(user.LargeText);
+        Assert.True(user.HighContrast);
+    }
+
+    [Fact]
     public async Task Access_token_lasts_15_minutes_and_carries_no_email()
     {
         using var client = factory.CreateClient();

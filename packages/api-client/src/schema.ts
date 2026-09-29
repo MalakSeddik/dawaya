@@ -281,16 +281,16 @@ export interface components {
         };
         AddAllergyRequest: {
             /** Format: int32 */
-            ingredientId: null | number | string;
+            ingredientId: null | number;
             allergyText: null | string;
         };
         /** @enum {unknown} */
         AgeGroup: "Infant" | "Child" | "Adult" | "Elderly" | null;
         AllergyResponse: {
             /** Format: int32 */
-            id: number | string;
+            id: number;
             /** Format: int32 */
-            ingredientId: null | number | string;
+            ingredientId: null | number;
             ingredientNameEn: null | string;
             ingredientNameAr: null | string;
             allergyText: null | string;
@@ -330,7 +330,7 @@ export interface components {
         HealthState: "Healthy" | "Degraded" | "Unhealthy";
         IngredientResponse: {
             /** Format: int32 */
-            id: number | string;
+            id: number;
             nameEn: string;
             nameAr: null | string;
         };
@@ -345,13 +345,13 @@ export interface components {
             type?: null | string;
             title?: null | string;
             /** Format: int32 */
-            status?: null | number | string;
+            status?: null | number;
             detail?: null | string;
             instance?: null | string;
         };
         ProfileResponse: {
             /** Format: int32 */
-            id: number | string;
+            id: number;
             displayName: string;
             relationship: null | string;
             isSelf: boolean;
@@ -372,6 +372,10 @@ export interface components {
             password: string;
             displayName: string;
             preferredLanguage: null | string;
+            /** @default false */
+            largeText: boolean;
+            /** @default false */
+            highContrast: boolean;
         };
         ResetPasswordRequest: {
             userId: string;
@@ -394,7 +398,7 @@ export interface components {
             type?: null | string;
             title?: null | string;
             /** Format: int32 */
-            status?: null | number | string;
+            status?: null | number;
             detail?: null | string;
             instance?: null | string;
             errors?: {
@@ -707,7 +711,7 @@ export interface operations {
         parameters: {
             query?: {
                 search?: string;
-                limit?: number | string;
+                limit?: number;
             };
             header?: never;
             path?: never;

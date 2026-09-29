@@ -2,7 +2,15 @@ using Dawaya.Api.Features.Account;
 
 namespace Dawaya.Api.Features.Auth;
 
-public sealed record RegisterRequest(string Email, string Password, string DisplayName, string? PreferredLanguage);
+// The device's display preferences are carried over, so someone who turned on large text as a guest
+// keeps it after creating an account (BR-33).
+public sealed record RegisterRequest(
+    string Email,
+    string Password,
+    string DisplayName,
+    string? PreferredLanguage,
+    bool LargeText = false,
+    bool HighContrast = false);
 
 public sealed record LoginRequest(string Email, string Password);
 

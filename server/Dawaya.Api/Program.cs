@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Dawaya.Api.Data;
 using Dawaya.Api.Features.Account;
@@ -42,9 +43,10 @@ builder.Services
         foreach (var json in o.OutputFormatters.OfType<SystemTextJsonOutputFormatter>())
             json.SupportedMediaTypes.Remove("text/json");
     })
-    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-// The OpenAPI generator reads these options, so enums appear as strings in the contract too.
-builder.Services.ConfigureHttpJsonOptions(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    .AddJsonOptions(o => ConfigureJson(o.JsonSerializerOptions));
+// The OpenAPI generator reads these options, so the contract matches: enums as strings, and numbers
+// strictly as numbers (the web defaults also accept "1" strings, which types ids as number | string).
+builder.Services.ConfigureHttpJsonOptions(o => ConfigureJson(o.SerializerOptions));
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddDawayaProblemDetails();
@@ -80,6 +82,12 @@ app.UseDawayaOpenApi();
 app.MapControllers();
 
 await app.RunAsync();
+
+static void ConfigureJson(JsonSerializerOptions options)
+{
+    options.Converters.Add(new JsonStringEnumConverter());
+    options.NumberHandling = JsonNumberHandling.Strict;
+}
 
 // Exposed for WebApplicationFactory in Dawaya.Tests.
 public partial class Program;
